@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-master
+  namespace: guestbook-ns
+  labels:
+    app: redis
+    role: master
+spec:
+  selector:
+    matchLabels:
+      app: redis
+      role: master
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: master
+    spec:
+      containers:
+      - name: redis-master
+        image: k8s.gcr.io/redis:e2e
+        ports:
+          - containerPort: 6379
+            name: redis-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-master
+  namespace: guestbook-ns
+  labels:
+    app: redis
+    role: master
+spec:
+  selector:
+    app: redis
+    role: master
+  ports:
+    - name: redis-master
+      port: 6379
+      targetPort: 6379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-slave
+  namespace: guestbook-ns
+  labels:
+    app: redis
+    role: slave
+spec:
+  selector:
+    matchLabels:
+      app: redis
+      role: slave
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: slave
+    spec:
+      containers:
+      - name: redis-slave
+        image: k8s.gcr.io/redis-slave:v2
+        ports:
+          - containerPort: 6379
+            name: redis-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-slave
+  namespace: guestbook-ns
+  labels:
+    app: redis
+    role: slave
+spec:
+  selector:
+    app: redis
+    role: slave
+  ports:
+    - name: redis-slave
+      port: 6379
+      targetPort: 6379

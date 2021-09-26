@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: guestbook-green
+  namespace: guestbook-ns
+  labels:
+    app: guestbook-green
+spec:
+  selector:
+    app: guestbook-green
+  type: NodePort 
+  ports:
+    - name: guestbook-green
+      port: 8080
+      targetPort: http-server

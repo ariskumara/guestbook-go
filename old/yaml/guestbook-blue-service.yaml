@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: guestbook-blue
+  namespace: guestbook-ns
+  labels:
+    app: guestbook-blue
+spec:
+  selector:
+    app: guestbook-blue
+  type: LoadBalancer 
+  ports:
+    - name: guestbook
+      port: 80
+      targetPort: http-server

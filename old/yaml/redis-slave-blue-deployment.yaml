@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-slave
+  namespace: guestbook-ns
+  labels:
+    app: redis-blue
+    role: slave-blue
+spec:
+  selector:
+    matchLabels:
+      app: redis-blue
+      role: slave-blue
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-blue
+        role: slave-blue
+    spec:
+      containers:
+      - name: redis-slave-blue
+        image: k8s.gcr.io/redis-slave:v2
+        ports:
+          - containerPort: 6379
+            name: redis-server

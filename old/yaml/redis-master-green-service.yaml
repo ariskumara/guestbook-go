@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-master
+  namespace: guestbook-ns
+  labels:
+    app: redis-green
+    role: master-green
+spec:
+  selector:
+    app: redis-green
+    role: master-green
+  ports:
+    - name: redis-master-green
+      port: 6379
+      targetPort: redis-server

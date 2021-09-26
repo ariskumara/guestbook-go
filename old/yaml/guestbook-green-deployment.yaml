@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guestbook-green
+  namespace: guestbook-ns
+  labels:
+    app: guestbook-green
+spec:
+  selector:
+    matchLabels:
+      app: guestbook-green
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: guestbook-green
+    spec:
+      containers:
+      - name: guestbook
+        image: tenzai/guestbookgreen
+        ports:
+          - containerPort: 3000
+            name: http-server

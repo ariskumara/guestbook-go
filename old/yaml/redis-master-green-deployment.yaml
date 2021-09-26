@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-master-green
+  namespace: guestbook-ns
+  labels:
+    app: redis-green
+    role: master-green
+spec:
+  selector:
+    matchLabels:
+      app: redis-green
+      role: master-green
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-green
+        role: master-green
+    spec:
+      containers:
+      - name: redis-master-green
+        image: k8s.gcr.io/redis:e2e
+        ports:
+          - containerPort: 6379
+            name: redis-server
