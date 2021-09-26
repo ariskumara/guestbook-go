@@ -34,6 +34,6 @@ spec:
     app: guestbook-green
   type: NodePort 
   ports:
-    - name: guestbook
-      port: 80
+    - name: guestbook-green
+      port: 8080
       targetPort: 3000
