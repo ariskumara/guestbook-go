@@ -14,8 +14,8 @@ echo "========================"
 set -x
 
 rm alb-ingress-controller.yaml
-kubectl delete svc/guestbook-blue svc/guestbook-green svc/redis-master-slave -n guestbook-ns
-kubectl delete deploy/guestbook-blue deploy/guestbook-green deploy/redis-master-slave -n guestbook-ns
+kubectl delete svc/guestbook-blue svc/guestbook-green svc/redis-master svc/redis-slave -n guestbook-ns
+kubectl delete deploy/guestbook-blue deploy/guestbook-green deploy/redis-master deploy/redis-slave -n guestbook-ns
 kubectl delete ingress alb-ingress -n guestbook-ns
 kubectl delete deploy alb-ingress-controller -n kube-system
 set +x
