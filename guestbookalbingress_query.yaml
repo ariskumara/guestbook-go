@@ -8,9 +8,9 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/subnets: subnet-0114b2d4b39a73a3d, subnet-08f093fba929f535d, subnet-0ab008105ceb742af
     alb.ingress.kubernetes.io/security-groups: sg-058d854ccc7182c78
-    alb.ingress.kubernetes.io/conditions.flask-svc-alb-green: '[{"Field":"query-string","QueryStringConfig":{"Values":[{"Key":"group","Value":"green"}]}}]'
+    alb.ingress.kubernetes.io/conditions.guestbook-svc-green: '[{"Field":"query-string","QueryStringConfig":{"Values":[{"Key":"group","Value":"green"}]}}]'
     alb.ingress.kubernetes.io/conditions.forward-multiple-tg: '[{"Field":"query-string","QueryStringConfig":{"Values":[{"Key":"group","Value":"blue"}]}}]'
-    alb.ingress.kubernetes.io/actions.forward-multiple-tg: '{"Type":"forward","ForwardConfig":{"TargetGroups":[{"ServiceName":"guestbook-blue","ServicePort":"80","Weight":100},{"ServiceName":"guestbook-green","ServicePort":"8080","Weight":0}]}}'
+    alb.ingress.kubernetes.io/actions.forward-multiple-tg: '{"Type":"forward","ForwardConfig":{"TargetGroups":[{"ServiceName":"guestbook-svc-blue","ServicePort":"80","Weight":100},{"ServiceName":"guestbook-svc-green","ServicePort":"8080","Weight":0}]}}'
 
   labels:
     app: guestbook-ingress
@@ -19,12 +19,12 @@ spec:
   - http:
       paths:
         - backend:
-            serviceName: guestbook-green
+            serviceName: guestbook-svc-green
             servicePort: 8080
         - backend:
             serviceName: forward-multiple-tg
             servicePort: use-annotation
         - path: /*
           backend:
-            serviceName: guestbook-blue
+            serviceName: guestbook-svc-blue
             servicePort: 80

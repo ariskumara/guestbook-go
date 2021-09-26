@@ -1,22 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: guestbook-blue
+  name: guestbook-deploy-blue
   namespace: guestbook-ns
-  labels:
-    app: guestbook-blue
 spec:
   selector:
     matchLabels:
-      app: guestbook-blue
+      app: guestbook-deploy-blue
   replicas: 1
   template:
     metadata:
       labels:
-        app: guestbook-blue
+        app: guestbook-deploy-blue
     spec:
       containers:
-      - name: guestbook
+      - name: guestbookblue
         image: tenzai/guestbookblue
         ports:
           - containerPort: 3000
@@ -25,15 +23,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: guestbook-blue
+  name: guestbook-svc-blue
   namespace: guestbook-ns
-  labels:
-    app: guestbook-blue
 spec:
   selector:
-    app: guestbook-blue
-  type: LoadBalancer 
+    app: guestbook-deploy-blue
+  type: NodePort 
   ports:
-    - name: guestbook
+    - name: guestbook-blue
       port: 80
       targetPort: 3000
