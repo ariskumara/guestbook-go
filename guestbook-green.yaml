@@ -32,7 +32,7 @@ metadata:
 spec:
   selector:
     app: guestbook-green
-  type: LoadBalancer 
+  type: NodePort 
   ports:
     - name: guestbook
       port: 80
