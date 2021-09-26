@@ -14,8 +14,8 @@ echo "========================"
 set -x
 
 rm alb-ingress-controller.yaml
-kubectl delete svc/guestbook-blue svc/guestbook-green svc/redis-master-blue svc/redis-master-green svc/redis-slave-blue svc/redis-slave-green -n guestbook-ns
-kubectl delete deploy/guestbook-blue deploy/guestbook-green deploy/redis-master-blue deploy/redis-master-green deploy/redis-slave-blue deploy/redis-slave-green -n guestbook-ns
+kubectl delete svc/guestbook-blue svc/guestbook-green svc/redis-master-slave -n guestbook-ns
+kubectl delete deploy/guestbook-blue deploy/guestbook-green deploy/redis-master-slave -n guestbook-ns
 kubectl delete ingress alb-ingress -n guestbook-ns
 kubectl delete deploy alb-ingress-controller -n kube-system
 set +x
@@ -67,19 +67,9 @@ aws iam put-role-policy --role-name $NODE_ROLE_NAME --policy-name elb-policy --p
 
 #Instantiate Blue and Green PODS
 kubectl apply -f guestbook-namespace.yaml
-kubectl apply -f redis-slave-green-deployment.yaml
-kubectl apply -f redis-slave-blue-deployment.yaml
-kubectl apply -f redis-master-green-deployment.yaml
-kubectl apply -f redis-master-blue-deployment.yaml
-kubectl apply -f guestbook-green-deployment.yaml
-kubectl apply -f guestbook-blue-deployment.yaml
-
-kubectl apply -f redis-slave-green-service.yaml
-kubectl apply -f redis-slave-blue-service.yaml
-kubectl apply -f redis-master-green-service.yaml
-kubectl apply -f redis-master-blue-service.yaml
-kubectl apply -f guestbook-green-service.yaml
-kubectl apply -f guestbook-blue-service.yaml
+kubectl apply -f redis-master-slave.yaml
+kubectl apply -f guestbook-green.yaml
+kubectl apply -f guestbook-blue.yaml
 
 echo "Sleep for 5 seconds to allow creation of resources"
 set -x
